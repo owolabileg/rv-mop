@@ -23,17 +23,18 @@ eval "mkdir -p $TEMP_DIR/mop"
 
 RVM_FILES="${MOP_FILES//mop/rvm}"
 
-eval "javamop -merge '$MOP_FILES' -d $TEMP_DIR/"
-eval "rv-monitor -merge -d $TEMP_DIR/mop/ $RVM_FILES"
+eval "javamop -merge '$MOP_FILES'"
+mv ${MOP_FILES}/MultiSpec_1MonitorAspect.aj $TEMP_DIR
+eval "rv-monitor -merge -d $TEMP_DIR/mop/ $MOP_FILES/*.rvm"
 eval "javac $TEMP_DIR/mop/MultiSpec_1RuntimeMonitor.java"
 
 if [ $EXCLUDE = 'n' ]; then
-	$EXCLUDE_OPT='' # jars will not be excluded
+	EXCLUDE_OPT='' # jars will not be excluded
 else
-	$EXCLUDE_OPT='-excludeJars'
+	EXCLUDE_OPT='-excludeJars'
 fi
 
-eval "javamopagent $TEMP_DIR/MultiSpec_1MonitorAspect.aj $TEMP_DIR -n $OUTPUT_NAME $EXCLUDE_OPT"
+eval "javamopagent -m $TEMP_DIR/MultiSpec_1MonitorAspect.aj $TEMP_DIR/ -n $OUTPUT_NAME $EXCLUDE_OPT"
 eval "rm -r $TEMP_DIR"
 
 
