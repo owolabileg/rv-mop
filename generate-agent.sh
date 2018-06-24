@@ -1,3 +1,8 @@
+## USAGE: generate-agent.sh MOP_FILES OUTPUT_NAME [-e]
+## MOP_FILES are the .mop files. Escape regex characters (such as *) with a \
+## the name of the output .jar file
+## -e flag, when set, excludes jars
+
 MOP_FILES="$1" # input MOP files
 OUTPUT_NAME=$2 # name of MOP agent jar file
 TEMP_DIR='temp_JavaMOP'
